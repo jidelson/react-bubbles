@@ -9,7 +9,7 @@ const initialColor = {
   code: { hex: "" }
 };
 
-const ColorList = ({ colors, updateColors, deleteColor }) => {
+const ColorList = ({ colors, updateColors, setColorList}) => {
   console.log(colors);
   const [editing, setEditing] = useState(false);
   const [colorToEdit, setColorToEdit] = useState(initialColor);
@@ -29,22 +29,26 @@ const ColorList = ({ colors, updateColors, deleteColor }) => {
     // where is is saved right now?
     axios
     .put(`http://localhost:5000/api/colors/${id}`, colorToEdit)
-    .then(resp => {
-      updateColors(resp.data);
-      history.push('/')
+    .then(res => {
+      updateColors(res.data);
+      history.push('/bubblepage')
     })
     .catch(err => {
         console.log('Error:', err);
     })
   };
 
+
   
+
   const handleDelete = color => {
-    // make a delete request to delete this color
+    // make a delete request to delete this color!
     axiosWithAuth()
     .delete (`http://localhost:5000/api/colors/${color.id}`)
     .then((res) => {
-      deleteColor(res.data)
+      // setColorList(res.data)
+      const updatedColorList = colors.filter((color) => color.id !== color);
+      setColorList(updatedColorList);
       history.push('/');
     })
     .catch(err => console.log('delete err', err))

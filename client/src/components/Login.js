@@ -18,7 +18,7 @@ const Login = () => {
         ...loginFormValues,
         [e.target.name]: e.target.value
      })
-}
+  }
 
   const onLogin = e => {
     e.preventDefault();

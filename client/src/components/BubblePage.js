@@ -26,9 +26,19 @@ useEffect(() => {
     getData()
 }, [])
 
+const updateColors = updatedColor => {
+  const updatedColors = colorList.map(colors => {
+    if(colors.id === updatedColor.id){
+      return updatedColor;
+    }
+    return colors;
+  });
+  setColorList(updatedColors);
+}
+
   return (
     <>
-      <ColorList colors={colorList} updateColors={setColorList} />
+      <ColorList colors={colorList} setColorList={setColorList} updateColors={updateColors} />
       <Bubbles colors={colorList} />
     </>
   );
